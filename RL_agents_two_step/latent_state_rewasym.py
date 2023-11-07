@@ -109,19 +109,16 @@ def latent_state_rewasym_session_simulate(n_trials, task, param_names, params, k
 
 class Latent_state_rewasym(RL_agent):
   '''
-  Agent believes that there are two states of the world
+  Agent believes that there are two states of the world, but with an asymmetric effect of non-rewarded trials
 
-  State 0, Second step 0 reward prob = good_prob, sec. step 1 reward prob = 1 - good_prob
-  State 1, Second step 1 reward prob = good_prob, sec. step 0 reward prob = 1 - good_prob
+  State 0, Second step 0 reward prob = rew_good, second step 1 reward prob = rew_bad, second step 0 & 1 non-reward prob = non_rew
+  State 1, Second step 1 reward prob = rew_good, second step 0 reward prob = rew_bad, second step 0 & 1 non-reward prob = non_rew
 
   Agent believes the probability that the state of the world changes on each step is p_r.
   different after rewarded and unrewarded trials
 
   The agent infers which state of the world it is most likely to be in, and then chooses
-  the action which leads to the best second step in that state with probability (1- p_lapse)
-  -
-  LIKE Latent_state_diff4, but V_s takes into account the reward probability in each state (0.8 and 0.2)
-
+  the action which leads to the best second step in that state
   '''
 
   def __init__(self, kernels=['bs', 'persv']):

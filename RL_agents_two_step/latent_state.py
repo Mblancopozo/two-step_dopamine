@@ -30,8 +30,6 @@ def latent_state_session_value(choices, second_steps, outcomes, n_trials, transi
     # Update of state probabilities due to possibility of block reversal.
     p_1[i + 1] = (1 - p_r) * p_1[i + 1] + p_r * (1 - p_1[i + 1])
 
-    # V_s[i + 1, 0] = 1 - p_1[i + 1]
-    # V_s[i + 1, 1] = p_1[i + 1]
     V1 = 0.8 * p_1[i + 1] + 0.2 * (1 - p_1[i + 1])
 
     V_s[i + 1, 0] = 1 - V1
@@ -89,8 +87,6 @@ def latent_state_session_simulate(n_trials, task, param_names, params, kernels):
 
     V_s[i + 1, 0] = 1 - V1
     V_s[i + 1, 1] = V1
-    # V_s[i + 1, 0] = 1 - p_1
-    # V_s[i + 1, 1] = p_1
 
     Q_mb = trans_prob[0] * V_s[i + 1, :] + trans_prob[1] * V_s[i + 1, ::-1]  # Model based action values.
     Q_mb = weight_inf * Q_mb
@@ -111,7 +107,7 @@ class Latent_state(RL_agent):
   Agent believes the probability that the state of the world changes on each step is p_r.
 
   The agent infers which state of the world it is most likely to be in, and then chooses
-  the action which leads to the best second step in that state with probability (1- p_lapse)
+  the action which leads to the best second step in that state
   '''
 
   def __init__(self, kernels=['bs', 'persv']):

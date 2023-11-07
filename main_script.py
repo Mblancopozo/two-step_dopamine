@@ -1,9 +1,11 @@
-# -------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------------------
 # Functions to import data and generate the main figures from the manuscript (Blanco-Pozo, Akam & Walton, 2023)
 # Marta Blanco-Pozo, 2023
-# -------------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------------------------------
 
-#%% Imports
+# ---------------------------------------------------------------------------------------------------------------
+# Imports
+# ---------------------------------------------------------------------------------------------------------------
 import sys, os
 import matplotlib
 
@@ -18,7 +20,11 @@ from code import plot_behaviour as pl, saving as sv, simulation as sim, \
 
 from RL_agents_two_step import mf, mb, latent_state, mf_forget_diffa, mb_forget_0_diffa, latent_state_rewasym
 
-#%% Import manuscript data
+dir_folder_variables = './data_variables/'
+
+# ---------------------------------------------------------------------------------------------------------------
+# 1- Import manuscript data
+# ---------------------------------------------------------------------------------------------------------------
 def preprocess_data(dir_folder_session_1, dir_folder_pho_1, dir_folder_session_2, dir_folder_pho_2, **kwargs):
   save_folder = kwargs.pop('save_folder', [])
   return_variables = kwargs.pop('return_variables', False)
@@ -147,7 +153,9 @@ def preprocess_data_cohort(mice, day, dir_folder_sessions, dir_folder_photometry
             'corrected_photometry': all_corrected_signal,
             'photometry_simplified_info': all_photo_data_info}
 
-#%% Time-wrap trials
+# ---------------------------------------------------------------------------------------------------------------
+# 2- Time-wrap trials
+# ---------------------------------------------------------------------------------------------------------------
 def time_wrap_trials(sessions_together, all_sample_times_pyc_together, all_corrected_signal_together,
                      all_photo_data_info, **kwargs):
   '''
@@ -198,7 +206,10 @@ def time_wrap_trials(sessions_together, all_sample_times_pyc_together, all_corre
             'time_start': time_start,
             'time_end': time_end,
             'all_photo_data_info_short': all_photo_data_info_short}
-#%% Dictionary structure for analysis
+
+# ---------------------------------------------------------------------------------------------------------------
+# 3- Dictionary structure for analysis
+# ---------------------------------------------------------------------------------------------------------------
 def create_indictor_region_dict(save_folder, **kwargs):
   '''
   Create a dictionary with selected data for easy manipulation.
@@ -299,7 +310,9 @@ def create_indictor_region_dict(save_folder, **kwargs):
   if save_dict_name != []:
     sv.save_variable(dict_photo, save_dict_name, save_folder)
 
-#%% Import saved variables - provided in manuscript
+# ---------------------------------------------------------------------------------------------------------------
+# 4- Import saved variables - provided in data_variables folder (no need to run previous sections 1-3)
+# ---------------------------------------------------------------------------------------------------------------
 def import_manuscript_variables(dir_folder_save_variables):
   t_scale_whole, v_line, time_start, time_end = sv.import_several_variables_joblib(
     ['t_scale_whole', 'v_line', 'time_start', 'time_end'], dir_folder_save_variables)
@@ -311,7 +324,10 @@ def import_manuscript_variables(dir_folder_save_variables):
              + dict_photo['dlight_dms']['sessions_select']
 
   return t_scale_whole, v_line, time_start, time_end, sessions_together, dict_photo, sessions
-#%% Figure 1C-F
+
+# ---------------------------------------------------------------------------------------------------------------
+# 5- Figure 1C-F
+# ---------------------------------------------------------------------------------------------------------------
 def plot_figure1c(session, **kwargs):
   '''
   Example session of choices exponential moving average
@@ -424,7 +440,11 @@ def plot_figure1f(sessions_together, **kwargs):
   fig.set_size_inches(2, 2.3)
   if save != []:
     pl.savefig(save[0], save[1])
-#%% Figure 1G-J
+
+# ---------------------------------------------------------------------------------------------------------------
+# 6- Figure 1G-J - run directly plotting functions (plot_figure1g_i and plot_figure1h_j) if using variable
+# 'dict_sim_agents' provided in data_variables folder, fits are also provided
+# ---------------------------------------------------------------------------------------------------------------
 def fit_and_save_behavioural_models_fig1(sessions_together):
   '''
   Fit and save behavioural models used in figure 1 on subjects' data. Fits ocurr per subjects separatelly,
@@ -484,7 +504,8 @@ def simulate_behaviour_from_models(sessions_together, dir_folder_models, **kwarg
     if return_variable:
       return dict_sim_agents
 
-dict_sim_agents = sv.import_variable('dict_sim_agents', dir_folder_models)
+#import simulated sessions for each agent
+dict_sim_agents = sv.import_variable('dict_sim_agents', dir_folder_variables)
 
 def plot_figure1g_i(dict_sim_agents, **kwargs):
   '''
@@ -552,7 +573,9 @@ def plot_figure1h_j(dict_sim_agents, **kwargs):
   if save != []:
     pl.savefig(save[0], save[1])
 
-#%% Figure 2 & 4F - dopamine z-score plots
+# ---------------------------------------------------------------------------------------------------------------
+# 7- Figure 2 & 4F - dopamine z-score plots
+# ---------------------------------------------------------------------------------------------------------------
 def plot_figure2_traces(t_scale_whole, dict_photo, v_line, time_start, **kwargs):
   '''
   plot photometry traces
@@ -671,7 +694,9 @@ def plot_figure4f_traces(t_scale_whole, dict_photo, v_line, time_start, **kwargs
       pl.savefig(save[0], '{}_{}'.format(save[1], indicator_region))
 
 
-#%% Figure 3, 4, S4-8 - Photometry regression
+# ---------------------------------------------------------------------------------------------------------------
+# 8- Figure 3, 4, S4-8 - Photometry regression
+# ---------------------------------------------------------------------------------------------------------------
 def plot_photometry_regression(dict_photo, t_scale_whole, v_line, time_start, **kwargs):
   '''
   :param dict_photo, t_scale_whole, v_line, time_start: variables from preprocessing steps
@@ -814,7 +839,10 @@ def plot_photometry_regression(dict_photo, t_scale_whole, v_line, time_start, **
     if return_variables:
       return coef_reg_all, all_alpha
 
-#%% Figure 5 - Optogenetics
+# ---------------------------------------------------------------------------------------------------------------
+# 9- Figure 5 - Optogenetics - no need to run import_opto_data function if using variable 'df_stim_opto' provided
+# in data_variables folder
+# ---------------------------------------------------------------------------------------------------------------
 def plot_figure5b(dir_folder, **kwargs):
   '''
   ICSS
@@ -861,6 +889,9 @@ def import_opto_data(dir_folder, **kwargs):
 
   if return_dataframe:
     return df_sessions_opto_activ
+
+#import dataframe with the optogenetic behavioural data
+df_sessions_opto_activ = sv.import_variable('df_stim_opto', dir_folder_variables)
 
 def plot_figure5e_h(df_sessions_opto_activ, **kwargs):
   '''

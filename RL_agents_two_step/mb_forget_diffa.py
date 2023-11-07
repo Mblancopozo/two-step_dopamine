@@ -84,7 +84,8 @@ def mb_forget_diffa_session_simulate(n_trials, task, param_names, params, kernel
 
 class MB_forget_diffa(RL_agent):
   '''
-  Model-based agent
+  Model-based agent with asymmetric learning rates for rewarded and non-rewarded trials,
+  and forgetting towards neutral value of the non-experienced second-step state
   '''
 
   def __init__(self, kernels=['bs', 'persv']):
