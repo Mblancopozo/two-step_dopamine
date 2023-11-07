@@ -12,7 +12,11 @@ The file [main_script.py](./main_script.py) contains the functions to import the
 [main_script.py](./main_script.py) is divided into several sections: 1) Imports, 2) Import manuscript data, 3) Time-wrap trials, 4) Dictionary structure for analysis, 5) Import saved variables, 6) Figure 1C-F, 7) Figure 1G-J, 8) Figure 2 & 4F - dopamine z-score plots, 9) Figure 3, 4, S4-8 - Photometry regression, 10) Figure 5 - Optogenetics
 
 The `raw_data` folder contains the behavioural and photometry files
+
 The `data_variables` folder contains the imported and preprocessed data. 
+
 The `code` folder contains scripts with functions for analysis and plotting. These functions are called from [main_script.py](./main_script.py).
+
+The `RL_agents_two_step` folder contains the RL models of each class: model-free (mf), model-based (mb), Bayesian inference (latent_state), model-free with different learning rates for rewards and omissions and forgetting of the non-experienced state (mf_forget_diffa), model-based with different learning rates and forgetting parameter decaying towards 0 (mb_forget_0_diffa), and asymmetric bayesian inference (latent_state_rewasym).
 
 Instead of importing and preprocessing the data from the behavioural and photometry files in the `raw_data` folder, the imported and preprocessed variables can be found in the `data_variables` folder. Then, from the [main_script.py](./main_script.py), section 5, these can be directly imported.
