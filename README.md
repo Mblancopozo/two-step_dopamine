@@ -2,6 +2,8 @@
 
 ![GitHub_fig](https://github.com/Mblancopozo/two-step_dopamine/assets/34422444/cddb99db-bba6-48c7-bb63-11274612d545)
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10093116.svg)](https://doi.org/10.5281/zenodo.10093116)
+
 This repository contains code used to generate the main figures from the [manuscript](https://www.biorxiv.org/content/10.1101/2021.06.25.449995v3):
 
 > Blanco-Pozo, M., Akam, T., &  Walton, M. (2023).  **Dopamine-independent state inference mediates expert reward guided decision making**  *bioRxiv*, 2023-04.
