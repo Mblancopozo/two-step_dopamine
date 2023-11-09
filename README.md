@@ -15,7 +15,7 @@ The `code` folder contains scripts with functions for analysis and plotting. The
 
 The `RL_agents_two_step` folder contains the RL models of each class: model-free (mf), model-based (mb), Bayesian inference (latent_state), model-free with different learning rates for rewards and omissions and forgetting of the non-experienced state (mf_forget_diffa), model-based with different learning rates and forgetting parameter decaying towards 0 (mb_forget_0_diffa), and asymmetric bayesian inference (latent_state_rewasym).
 
-The raw data files and preprocessed variables to generate the figures can be found at: 
+The raw data files and preprocessed variables to generate the figures can be found at: https://osf.io/u6xrc/?view_only=95ed86684f494b9582860ddcb31cd0e1
 
 - The `raw_data_files` folder contains the behavioural and photometry files
 
