@@ -20,12 +20,28 @@ from code import plot_behaviour as pl, saving as sv, simulation as sim, \
 
 from RL_agents_two_step import mf, mb, latent_state, mf_forget_diffa, mb_forget_0_diffa, latent_state_rewasym
 
-dir_folder_variables = './data_variables/'
+#dir_folder_variables = './data_variables/'
 
 # ---------------------------------------------------------------------------------------------------------------
 # 1- Import manuscript data
 # ---------------------------------------------------------------------------------------------------------------
 def preprocess_data(dir_folder_session_1, dir_folder_pho_1, dir_folder_session_2, dir_folder_pho_2, **kwargs):
+  '''
+  Preprocess data - Import and/or save behaviour and photometry data as in the manuscript
+  :param dir_folder_session_1: folder path of cohort 1 behavioural files
+  :param dir_folder_pho_1: folder path of cohort 1 photometry files
+  :param dir_folder_session_2: folder path of cohort 2 behavioural files
+  :param dir_folder_pho_2: folder path of cohort 2 photometry files
+  :param kwargs:
+    save_folder: if folder path is provided, it will save the variables in that directory
+    return_variables: if True, it will return a dictionary with the data:
+      {sessions: list with all the sessions,
+      photometry: list with all the photometry data for each session,
+      sample_times_pho: list of the times for each photometry timepoint in the 'photometry clock' (pyPhotometry),
+      sample_times_pyc: list of the times for each photometry timepoint in the 'behavioural clock' (pyControl),
+      corrected_photometry: list of the (bleached and motion) corrected photometry signals
+      photometry_simplified_info: a simplified version of the photometry variable
+  '''
   save_folder = kwargs.pop('save_folder', [])
   return_variables = kwargs.pop('return_variables', False)
 
@@ -100,7 +116,7 @@ def preprocess_data(dir_folder_session_1, dir_folder_pho_1, dir_folder_session_2
 
 def preprocess_data_cohort(mice, day, dir_folder_sessions, dir_folder_photometry, **kwargs):
   '''
-  Preprocess data - Import and/or save behaviour and photometry data
+  Preprocess data - Import and/or save behaviour and photometry data (as the function above but user can define what they want to import)
   :param mice: list of mice to import. e.g. [48, 49, 51, 52, 53, 54, 55, 56, 57, 61, 62]
   :param day: list of days to import. e.g. ['2019-11-18', '2019-11-19', '2019-11-20', '2019-11-21', '2019-11-22', '2019-11-23', '2019-11-24']
   :param dir_folder_sessions: path of the folder containing the pyControl files
